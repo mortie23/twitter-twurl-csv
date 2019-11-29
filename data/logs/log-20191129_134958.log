@@ -1,0 +1,27 @@
+INFO, 2019-11-29_13:49:58, func(main), [34mSTART[0m, search: deptdefence, type: at, ascii: %40, max_id: -1, since_id: -1
+INFO, 2019-11-29_13:49:59, func(createCSV), search_string: deptdefence, i: 1
+INFO, 2019-11-29_13:50:12, func(APICall), [31mEND[0m, search: deptdefence, type: at, ascii: %40, max_id: 1200244258298572800, since_id: 0, len: 100
+INFO, 2019-11-29_13:50:13, func(createCSV), search_string: deptdefence, i: 2
+INFO, 2019-11-29_13:50:36, func(APICall), [31mEND[0m, search: deptdefence, type: at, ascii: %40, max_id: 1199819595353186300, since_id: 0, len: 100
+INFO, 2019-11-29_13:50:37, func(createCSV), search_string: deptdefence, i: 3
+INFO, 2019-11-29_13:51:11, func(APICall), [31mEND[0m, search: deptdefence, type: at, ascii: %40, max_id: 1199074445811470300, since_id: 0, len: 100
+INFO, 2019-11-29_13:51:12, func(createCSV), search_string: deptdefence, i: 4
+INFO, 2019-11-29_13:52:10, func(APICall), [31mEND[0m, search: deptdefence, type: at, ascii: %40, max_id: 1198335629072973800, since_id: 0, len: 100
+INFO, 2019-11-29_13:52:11, func(createCSV), search_string: deptdefence, i: 5
+INFO, 2019-11-29_13:53:18, func(APICall), [31mEND[0m, search: deptdefence, type: at, ascii: %40, max_id: 1198240171965083600, since_id: 0, len: 100
+INFO, 2019-11-29_13:53:20, func(createCSV), search_string: deptdefence, i: 6
+INFO, 2019-11-29_13:54:52, func(APICall), [31mEND[0m, search: deptdefence, type: at, ascii: %40, max_id: 1198065329852674000, since_id: 0, len: 100
+INFO, 2019-11-29_13:54:53, func(createCSV), search_string: deptdefence, i: 7
+INFO, 2019-11-29_13:56:34, func(APICall), [31mEND[0m, search: deptdefence, type: at, ascii: %40, max_id: 1197892849230061600, since_id: 0, len: 100
+INFO, 2019-11-29_13:56:36, func(createCSV), search_string: deptdefence, i: 8
+INFO, 2019-11-29_13:58:33, func(APICall), [31mEND[0m, search: deptdefence, type: at, ascii: %40, max_id: 1197681700958089200, since_id: 0, len: 100
+INFO, 2019-11-29_13:58:34, func(createCSV), search_string: deptdefence, i: 9
+INFO, 2019-11-29_14:00:57, func(APICall), [31mEND[0m, search: deptdefence, type: at, ascii: %40, max_id: 1197600532443148300, since_id: 0, len: 100
+INFO, 2019-11-29_14:00:59, func(createCSV), search_string: deptdefence, i: 10
+INFO, 2019-11-29_14:03:23, func(APICall), [31mEND[0m, search: deptdefence, type: at, ascii: %40, max_id: 1197538606115631000, since_id: 0, len: 100
+INFO, 2019-11-29_14:03:25, func(createCSV), search_string: deptdefence, i: 11
+INFO, 2019-11-29_14:06:14, func(APICall), [31mEND[0m, search: deptdefence, type: at, ascii: %40, max_id: 1197357314702921700, since_id: 0, len: 100
+INFO, 2019-11-29_14:06:16, func(createCSV), search_string: deptdefence, i: 12
+INFO, 2019-11-29_14:09:07, func(APICall), [31mEND[0m, search: deptdefence, type: at, ascii: %40, max_id: 1197201343863238700, since_id: 0, len: 90
+INFO, 2019-11-29_14:09:08, func(createCSV), search_string: deptdefence, i: 13
+INFO, 2019-11-29_14:11:59, func(APICall), [31mEND[0m, search: deptdefence, type: at, ascii: %40, max_id: 1196872820036374500, since_id: 0, len: 0
