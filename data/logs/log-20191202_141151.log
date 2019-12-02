@@ -1,0 +1,5 @@
+INFO, 2019-12-02_14:11:51, func(main), [34mSTART[0m, search: afl, type: at, ascii: %40, max_id: -1, since_id: -1
+INFO, 2019-12-02_14:11:52, func(createCSV), search_string: afl, i: 1
+INFO, 2019-12-02_14:12:06, func(APICall), [31mEND[0m, search: afl, type: at, ascii: %40, max_id: 1201337435726086100, since_id: 0, len: 100
+INFO, 2019-12-02_14:12:07, func(createCSV), search_string: afl, i: 2
+INFO, 2019-12-02_14:12:35, func(APICall), [31mEND[0m, search: afl, type: at, ascii: %40, max_id: 1200906044072792000, since_id: 0, len: 100

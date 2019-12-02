@@ -34,17 +34,18 @@ function createCSV() {
 		rm ./data/${search_string}-statuses.csv
 		rm ./data/${search_string}-users.csv
 		rm ./data/${search_string}-mentions.csv
+		rm ./data/${search_string}-mentions-temp.csv
 		#echoLog 'INFO' "cleaned previous CSV"
-		echo 'status_id,user_id,text,is_quote_status,retweet_count,favorite_count,favorited,retweeted,created_at' > ./data/${search_string}-statuses.csv
-		echo 'user_id,screen_name,location,description,followers_count,friends_count,listed_count,favourites_count,verified,statuses_count,created_at' > ./data/${search_string}-users.csv
-		echo 'status_id,user_id' > ./data/${search_string}-mentions.csv
+		echo 'status_id,user_id,text,is_quote_status,retweet_count,favorite_count,favorited,retweeted,created_at,filename' > ./data/${search_string}-statuses.csv
+		echo 'user_id,screen_name,location,description,followers_count,friends_count,listed_count,favourites_count,verified,statuses_count,created_at,filename' > ./data/${search_string}-users.csv
+		echo 'status_id,user_id,filename,mention_order' > ./data/${search_string}-mentions.csv
 		#echoLog 'INFO' "CSV with header row created"
 	fi
 
 	## Status
-	cat ./data/${search_string}-${i}.json | jq -r '.statuses[] | ([.id_str, .user.id_str, .text, .is_quote_status, .retweet_count, .favorite_count, .favorited, .retweeted, .created_at] | @csv)' >> ./data/${search_string}-statuses.csv
+	cat ./data/${search_string}-${i}.json | jq -r --arg filename "${search_string}-${i}.json" '.statuses[]+{filename:$filename} | ([.id_str, .user.id_str, .text, .is_quote_status, .retweet_count, .favorite_count, .favorited, .retweeted, .created_at, .filename] | @csv)'  >> ./data/${search_string}-statuses.csv
 	## User
-	cat ./data/${search_string}-${i}.json | jq -r '.statuses[] | ([.user.id_str, .user.screen_name, .user.location, .user.description, .user.followers_count, .user.friends_count, .user.listed_count, .user.favourites_count, .user.verified, .user.statuses_count, .user.created_at] | @csv)' >> ./data/${search_string}-users.csv
+	cat ./data/${search_string}-${i}.json | jq -r --arg filename "${search_string}-${i}.json" '.statuses[]+{filename:$filename} | ([.user.id_str, .user.screen_name, .user.location, .user.description, .user.followers_count, .user.friends_count, .user.listed_count, .user.favourites_count, .user.verified, .user.statuses_count, .user.created_at, .filename] | @csv)' >> ./data/${search_string}-users.csv
 	## User mentions
 	cat ./data/${search_string}-${i}.json | jq -r '.statuses[] as $in | ([$in.id_str, $in.entities.user_mentions[].id_str] | @csv)' >> ./data/${search_string}-mentions-temp.csv
 	# transpose the columns to rows
@@ -57,7 +58,7 @@ function createCSV() {
 				do
 					cnext=$((c+1))
 					user_id=`echo ${line} | cut -d "," -f${cnext}`
-					echo "${id}, ${user_id}" >> ./data/${search_string}-mentions.csv
+					echo "${id}, ${user_id}, ${search_string}-${i}.json, ${cnext}|${num_mentions}" >> ./data/${search_string}-mentions.csv
 				done
 		done
 }
@@ -68,9 +69,9 @@ function APICall() {
 	for i in $(eval echo {1..${num_files}}); do
 		## on first run dont send an id
 		if [ ${i} == 1 ]; then
-			twurl "/1.1/search/tweets.json?q=${ascii}${search_string}&result_type=recent&count=100&lang=en" > ./data/${search_string}-${i}.json
+			twurl "/1.1/search/tweets.json?q=${ascii}${search_string}&result_type=recent&count=100&lang=en&tweet_mode=extended" > ./data/${search_string}-${i}.json
 		else
-			twurl "/1.1/search/tweets.json?q=${ascii}${search_string}&result_type=recent&count=100&lang=en&max_id=${next_id}" > ./data/${search_string}-${i}.json
+			twurl "/1.1/search/tweets.json?q=${ascii}${search_string}&result_type=recent&count=100&lang=en&tweet_mode=extended&max_id=${next_id}" > ./data/${search_string}-${i}.json
 		fi
 
 		## Remove all newlines
@@ -104,7 +105,6 @@ function APICall() {
 APICall
 
 ## Clean up duplicates in the user file
-awk '!a[$0]++' deptdefence-users.csv  > deptdefence-users-nodup.csv
-rm deptdefence-users.csv
-mv deptdefence-users-nodup.csv deptdefence-users.csv
-rm deptdefence-users-nodup.csv
+awk '!a[$0]++' ./data/${search_string}-users.csv  > ./data/${search_string}-users-nodup.csv
+rm ./data/${search_string}-users.csv
+mv ./data/${search_string}-users-nodup.csv ./data/${search_string}-users.csv
