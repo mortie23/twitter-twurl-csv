@@ -116,6 +116,7 @@ APICall
 loopJSONs
 
 ## Clean up duplicates in the user file
+## This wont work now that we have the filname for each row
 echoLog "INFO" "\e[34mNODUP\e[0m, filetype: users"
 awk '!a[$0]++' ./data/${search_string}-users.csv  > ./data/${search_string}-users-nodup.csv
 rm ./data/${search_string}-users.csv
