@@ -4,7 +4,7 @@
 # Description:	Get all the statuses for a search term
 # Usage:		./twurl-status.sh -s <search_string> -n <num_files> -st <hash/at>
 #				example:
-#					./twurl-status.sh -s afl -n 10 -st hash
+#					./twurl-status.sh -s deptdefence -n 8 -st at
 
 . common-functions.sh
 parseArgs "$@"
@@ -29,7 +29,7 @@ function createCSV() {
 	search_string=${1}
 	i=${2}
 
-	echoLog 'INFO' "search_string: ${search_string}, i: ${i}"
+	echoLog 'INFO' "search_string: ${search_string}, \e[93mi: ${i}\e[0m"
 	if [ ${i} == 1 ]; then
 		rm ./data/${search_string}-statuses.csv
 		rm ./data/${search_string}-users.csv
@@ -43,7 +43,7 @@ function createCSV() {
 	fi
 
 	## Status
-	cat ./data/${search_string}-${i}.json | jq -r --arg filename "${search_string}-${i}.json" '.statuses[]+{filename:$filename} | ([.id_str, .user.id_str, .text, .is_quote_status, .retweet_count, .favorite_count, .favorited, .retweeted, .created_at, .filename] | @csv)'  >> ./data/${search_string}-statuses.csv
+	cat ./data/${search_string}-${i}.json | jq -r --arg filename "${search_string}-${i}.json" '.statuses[]+{filename:$filename} | ([.id_str, .user.id_str, .full_text, .is_quote_status, .retweet_count, .favorite_count, .favorited, .retweeted, .created_at, .filename] | @csv)'  >> ./data/${search_string}-statuses.csv
 	## User
 	cat ./data/${search_string}-${i}.json | jq -r --arg filename "${search_string}-${i}.json" '.statuses[]+{filename:$filename} | ([.user.id_str, .user.screen_name, .user.location, .user.description, .user.followers_count, .user.friends_count, .user.listed_count, .user.favourites_count, .user.verified, .user.statuses_count, .user.created_at, .filename] | @csv)' >> ./data/${search_string}-users.csv
 	## User mentions
@@ -65,6 +65,8 @@ function createCSV() {
 
 ## Call the Twitter status API
 function APICall() {
+	echoLog "INFO" "\e[34mSTART\e[0m, search: ${search_string}, type: ${search_type}, ascii: ${ascii}, max_id: ${max_id}, since_id: ${since_id}"
+
 	## Loop through the number of times the user inputs
 	for i in $(eval echo {1..${num_files}}); do
 		## on first run dont send an id
@@ -81,9 +83,6 @@ function APICall() {
 		## parsing the search parameters
 		max_id=`jq '.search_metadata.max_id' ./data/${search_string}-${i}.json`
 		since_id=`jq '.search_metadata.since_id' ./data/${search_string}-${i}.json`
-		
-		## Call the create CSV function
-		createCSV ${search_string} ${i}
 
 		## finding the last id, to send it to the next request
 		## send list of all status id to temp file
@@ -92,19 +91,34 @@ function APICall() {
 		IFS=$'\n' read -d '' -r -a lines < temp.txt
 		## find the length of the statuses
 		len=`cat temp.txt | wc -l`
-		echoLog "INFO" "\e[31mEND\e[0m, search: ${search_string}, type: ${search_type}, ascii: ${ascii}, max_id: ${max_id}, since_id: ${since_id}, len: ${len}"
+		echoLog "INFO" "\e[93m${i} of ${num_files}\e[0m, \e[93mlen: ${len}\e[0m, max_id: ${max_id}, next_id: ${next_id}, since_id: ${since_id}"
 		let len=len-1
 		next_id=${lines[${len}]}
 		rm temp.txt
 
-		echo "Scraped ${i} of ${num_files}, next_id: ${next_id}"
-
 	done
+	echoLog "INFO" "\e[31mEND\e[0m, search: ${search_string}, type: ${search_type}, ascii: ${ascii}"
 }
 
+## Loop over files to create CSV
+function loopJSONs() {
+	echoLog "INFO" "\e[34mSTART\e[0m, search: ${search_string}, type: ${search_type}"
+	for (( j=1; j<=${num_files}; j++ ))
+		do
+			createCSV ${search_string} ${j}
+			cnext=$((j+1))
+		done
+	echoLog "INFO" "\e[31mEND\e[0m, search: ${search_string}, type: ${search_type}"
+}
+
+## Call the functions
 APICall
+loopJSONs
 
 ## Clean up duplicates in the user file
+echoLog "INFO" "\e[34mNODUP\e[0m, filetype: users"
 awk '!a[$0]++' ./data/${search_string}-users.csv  > ./data/${search_string}-users-nodup.csv
 rm ./data/${search_string}-users.csv
 mv ./data/${search_string}-users-nodup.csv ./data/${search_string}-users.csv
+
+echoLog "INFO" "\e[31mEND\e[0m, search: ${search_string}, type: ${search_type}, ascii: ${ascii}, max_id: ${max_id}, since_id: ${since_id}"

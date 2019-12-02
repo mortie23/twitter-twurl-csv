@@ -1,0 +1,23 @@
+INFO, 2019-12-02_15:35:24, func(main), [34mSTART[0m, search: deptdefence, type: at, ascii: %40, max_id: -1, since_id: -1
+INFO, 2019-12-02_15:35:24, func(APICall), [34mSTART[0m, search: deptdefence, type: at, ascii: %40, max_id: -1, since_id: -1
+INFO, 2019-12-02_15:35:26, func(APICall), [93m1 of 8[0m, [93mlen: 95[0m, max_id: 1201352343318597600, next_id: -1, since_id: 0
+INFO, 2019-12-02_15:35:28, func(APICall), [93m2 of 8[0m, [93mlen: 100[0m, max_id: 1200565921565180000, next_id: 1200565921565180000, since_id: 0
+INFO, 2019-12-02_15:35:30, func(APICall), [93m3 of 8[0m, [93mlen: 100[0m, max_id: 1200171302041968600, next_id: 1200171302041968600, since_id: 0
+INFO, 2019-12-02_15:35:31, func(APICall), [93m4 of 8[0m, [93mlen: 100[0m, max_id: 1199551500017524700, next_id: 1199551500017524700, since_id: 0
+INFO, 2019-12-02_15:35:34, func(APICall), [93m5 of 8[0m, [93mlen: 100[0m, max_id: 1198761233790320600, next_id: 1198761233790320600, since_id: 0
+INFO, 2019-12-02_15:35:37, func(APICall), [93m6 of 8[0m, [93mlen: 100[0m, max_id: 1198302036128723000, next_id: 1198302036128723000, since_id: 0
+INFO, 2019-12-02_15:35:39, func(APICall), [93m7 of 8[0m, [93mlen: 20[0m, max_id: 1198120827910144000, next_id: 1198120827910144000, since_id: 0
+INFO, 2019-12-02_15:35:40, func(APICall), [93m8 of 8[0m, [93mlen: 0[0m, max_id: 1197972011806425000, next_id: 1197972011806425000, since_id: 0
+INFO, 2019-12-02_15:35:40, func(APICall), [31mEND[0m, search: deptdefence, type: at, ascii: %40
+INFO, 2019-12-02_15:35:40, func(loopJSONs), [34mSTART[0m, search: deptdefence, type: at
+INFO, 2019-12-02_15:35:40, func(createCSV), search_string: deptdefence, [93mi: 1[0m
+INFO, 2019-12-02_15:35:59, func(createCSV), search_string: deptdefence, [93mi: 2[0m
+INFO, 2019-12-02_15:36:32, func(createCSV), search_string: deptdefence, [93mi: 3[0m
+INFO, 2019-12-02_15:37:26, func(createCSV), search_string: deptdefence, [93mi: 4[0m
+INFO, 2019-12-02_15:38:30, func(createCSV), search_string: deptdefence, [93mi: 5[0m
+INFO, 2019-12-02_15:40:26, func(createCSV), search_string: deptdefence, [93mi: 6[0m
+INFO, 2019-12-02_15:42:44, func(createCSV), search_string: deptdefence, [93mi: 7[0m
+INFO, 2019-12-02_15:45:10, func(createCSV), search_string: deptdefence, [93mi: 8[0m
+INFO, 2019-12-02_15:47:31, func(loopJSONs), [31mEND[0m, search: deptdefence, type: at
+INFO, 2019-12-02_15:47:32, func(main), [34mNODUP[0m, filetype: users
+INFO, 2019-12-02_15:47:32, func(main), [31mEND[0m, search: deptdefence, type: at, ascii: %40, max_id: 1197972011806425000, since_id: 0
