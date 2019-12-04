@@ -34,11 +34,10 @@ function createCSV() {
 		rm ./data/${search_string}-statuses.csv
 		rm ./data/${search_string}-users.csv
 		rm ./data/${search_string}-mentions.csv
-		rm ./data/${search_string}-mentions-temp.csv
 		#echoLog 'INFO' "cleaned previous CSV"
 		echo 'status_id,user_id,text,is_quote_status,retweet_count,favorite_count,favorited,retweeted,created_at,filename' > ./data/${search_string}-statuses.csv
 		echo 'user_id,screen_name,location,description,followers_count,friends_count,listed_count,favourites_count,verified,statuses_count,created_at,filename' > ./data/${search_string}-users.csv
-		echo 'status_id,user_id,filename,mention_order' > ./data/${search_string}-mentions.csv
+		echo 'status_id,user_id,screen_name,filename,mention_order' > ./data/${search_string}-mentions.csv
 		#echoLog 'INFO' "CSV with header row created"
 	fi
 
@@ -47,20 +46,30 @@ function createCSV() {
 	## User
 	cat ./data/${search_string}-${i}.json | jq -r --arg filename "${search_string}-${i}.json" '.statuses[]+{filename:$filename} | ([.user.id_str, .user.screen_name, .user.location, .user.description, .user.followers_count, .user.friends_count, .user.listed_count, .user.favourites_count, .user.verified, .user.statuses_count, .user.created_at, .filename] | @csv)' >> ./data/${search_string}-users.csv
 	## User mentions
-	cat ./data/${search_string}-${i}.json | jq -r '.statuses[] as $in | ([$in.id_str, $in.entities.user_mentions[].id_str] | @csv)' >> ./data/${search_string}-mentions-temp.csv
+	cat ./data/${search_string}-${i}.json | jq -r '.statuses[] as $in | ([$in.id_str, $in.entities.user_mentions[].id_str, $in.entities.user_mentions[].screen_name] | @csv)' >> ./data/${search_string}-mentions-temp.csv
 	# transpose the columns to rows
+	linenum=0
 	for line in $(cat ./data/${search_string}-mentions-temp.csv);
 		do
+			linenum=$((linenum+1))
+			if [ ${linenum} == 1 ]; then
+				echoLog "INFO" "transposing mentions"
+			fi 
 			id=`echo ${line} | cut -d "," -f1`
 			# count mentions
-			num_mentions=`echo ${line} | tr -cd , | wc -c`
+			num_mentions=$((`echo ${line} | tr -cd , | wc -c`/2))
 			for (( c=1; c<=${num_mentions}; c++ ))
 				do
-					cnext=$((c+1))
-					user_id=`echo ${line} | cut -d "," -f${cnext}`
-					echo "${id}, ${user_id}, ${search_string}-${i}.json, ${cnext}|${num_mentions}" >> ./data/${search_string}-mentions.csv
+					user_id_dlm=$((c+1))
+					screen_name_dlm=$((c+${num_mentions}+1))
+					user_id=`echo ${line} | cut -d "," -f${user_id_dlm}`
+					screen_name=`echo ${line} | cut -d "," -f${screen_name_dlm}`
+					echo "${id}, ${user_id}, ${screen_name}, ${search_string}-${i}.json, ${c}|${num_mentions}" >> ./data/${search_string}-mentions.csv
 				done
 		done
+		echoLog "INFO" "${linenum} total lines transposed"
+		## Cleanup the mentions-temp
+		rm ./data/${search_string}-mentions-temp.csv
 }
 
 ## Call the Twitter status API
@@ -111,15 +120,18 @@ function loopJSONs() {
 	echoLog "INFO" "\e[31mEND\e[0m, search: ${search_string}, type: ${search_type}"
 }
 
+## Clean up duplicates in the user file
+## This wont work now that the filname id added for each row. The duplication is across files
+function dupClean() {
+	echoLog "INFO" "\e[34mNODUP\e[0m, filetype: users"
+	awk '!a[$0]++' ./data/${search_string}-users.csv  > ./data/${search_string}-users-nodup.csv
+	rm ./data/${search_string}-users.csv
+	mv ./data/${search_string}-users-nodup.csv ./data/${search_string}-users.csv
+}
+
 ## Call the functions
 APICall
 loopJSONs
-
-## Clean up duplicates in the user file
-## This wont work now that we have the filname for each row
-echoLog "INFO" "\e[34mNODUP\e[0m, filetype: users"
-awk '!a[$0]++' ./data/${search_string}-users.csv  > ./data/${search_string}-users-nodup.csv
-rm ./data/${search_string}-users.csv
-mv ./data/${search_string}-users-nodup.csv ./data/${search_string}-users.csv
+#dupClean
 
 echoLog "INFO" "\e[31mEND\e[0m, search: ${search_string}, type: ${search_type}, ascii: ${ascii}, max_id: ${max_id}, since_id: ${since_id}"
