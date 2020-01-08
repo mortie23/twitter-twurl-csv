@@ -1,10 +1,7 @@
 ## Name:	Common Functions
-## Author:	Christopher Moirtimer, SAS Australia Professional Services Department
+## Author:	Christopher Moirtimer
 ## Date:	2019-05-20
 ## Desc:	Standard functions for use across all scripts
-## Notes:	This script is intended to be used in conjunction with SAS Professional Services projects
-##			This script contains no warranty, and it is the onus of the user of this script to validate that it
-##			will perform the expected tasks. It has only been tested on Viya 3.4.
 ## Usage:	. commonFunctions.sh
 
 ## Echo a info log level message with the current time
