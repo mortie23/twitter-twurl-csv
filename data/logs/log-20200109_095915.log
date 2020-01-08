@@ -1,0 +1,10 @@
+INFO, 2020-01-09_09:59:15, func(main), [34mSTART[0m, search: mortie23, type: at, ascii: %40, max_id: -1, since_id: -1
+INFO, 2020-01-09_09:59:15, func(APICall), [34mSTART[0m, search: mortie23, type: at, ascii: %40, max_id: -1, since_id: -1
+INFO, 2020-01-09_09:59:17, func(APICall), [93m1 of 1[0m, [93mlen: 100[0m, max_id: 1214881056605823000, next_id: -1, since_id: 0
+INFO, 2020-01-09_09:59:17, func(APICall), [31mEND[0m, search: mortie23, type: at, ascii: %40
+INFO, 2020-01-09_09:59:17, func(loopJSONs), [34mSTART[0m, search: mortie23, type: at
+INFO, 2020-01-09_09:59:17, func(createCSV), search_string: mortie23, [93mi: 1[0m
+INFO, 2020-01-09_09:59:17, func(createCSV), transposing mentions
+INFO, 2020-01-09_09:59:31, func(createCSV), 100 total lines transposed
+INFO, 2020-01-09_09:59:31, func(loopJSONs), [31mEND[0m, search: mortie23, type: at
+INFO, 2020-01-09_09:59:31, func(main), [31mEND[0m, search: mortie23, type: at, ascii: %40, max_id: 1214881056605823000, since_id: 0
