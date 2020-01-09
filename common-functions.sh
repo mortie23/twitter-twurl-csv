@@ -1,8 +1,8 @@
-## Name:  Common Functions
+## Name:    Common Functions
 ## Author:  Christopher Moirtimer
-## Date:  2019-05-20
-## Desc:  Standard functions for use across all scripts
-## Usage:  . commonFunctions.sh
+## Date:    2019-05-20
+## Desc:    Standard functions for use across all scripts
+## Usage:   .commonFunctions.sh
 
 ## Echo a info log level message with the current time
 ## usage echoLog "<loglevel>" "<message>"
@@ -30,6 +30,11 @@ function parseArgs() {
     ;;
     -n|--num_files)
     num_files="$2"
+    shift # past argument
+    shift # past value
+    ;;
+    -um|--user_mentions)
+    user_mentions="$2"
     shift # past argument
     shift # past value
     ;;
