@@ -1,10 +1,10 @@
 #!/bin/bash
-# Name:			Christopher Mortimer
-# Date:			2020-01-09
-# Description:	Get all the statuses for a search term
-# Usage:		./twurl-status.sh -s <search_string> -n <num_files>
-#				example:
-#					./twurl-status-lean.sh -s mortie23 -n 100
+## Name:	Christopher Mortimer
+## Date:	2020-01-09
+## Desc:	Get all the statuses for a search term
+## Usage:	./twurl-status.sh -s <search_string> -n <num_files>
+##				example:
+##				./twurl-status-lean.sh -s mortie23 -n 100
 
 . common-functions.sh
 parseArgs "$@"
