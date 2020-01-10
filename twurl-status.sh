@@ -6,7 +6,7 @@
 ##          -n: number of API calls to make, or use high number such as 1000 to pull all available
 ##          -st: string search type (at for @, hash for #)
 ##          -um: this option creates the CSV file for user mentions, very resource intensive
-## Usage:    ./twurl-status.sh -s <search_string> -n <num_files|high> -st <hash|at> -um <yes|no>
+## Usage:    ./twurl-status.sh -s <search_string> -n <num_files|high> -st <hash|at|nil> -um <yes|no>
 ##          example:
 ##          ./twurl-status.sh -s mortie23 -n 1000 -st at -um yes
 
@@ -22,11 +22,13 @@ i=1
 ## Process Search Type
 if [ ${search_type} == 'hash' ]; then
     ascii='%23'
-else
+elif [ ${search_type} == 'at' ]; then
     ascii='%40'
+else
+    ascii=''
 fi
 
-echoLog "INFO" "\e[34mSTART\e[0m, search: ${search_string}, type: ${search_type}, ascii: ${ascii}, max_id: ${max_id}, since_id: ${since_id}"
+echoLog "INFO" "\e[34mSTART\e[0m, search: ${search_string}, search_type: ${search_type}, ascii: ${ascii}, max_id: ${max_id}, since_id: ${since_id}"
 
 ## Function to create a CSV file from a JSON Twurl result
 function createCSV() {
@@ -79,8 +81,6 @@ function createCSV() {
       echoLog "INFO" "${linenum} total lines transposed"
       ## Cleanup the mentions-temp
       rm ./data/${search_string}-mentions-temp.csv
-    else
-      #echoLog "INFO" "Not transposing user_mentions file"
     fi
 }
 
