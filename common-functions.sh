@@ -43,6 +43,11 @@ function parseArgs() {
     shift # past argument
     shift # past value
     ;;
+    -rt|--run_type)
+    run_type="$2"
+    shift # past argument
+    shift # past value
+    ;;
     *)    # unknown option
     POSITIONAL+=("$1") # save it in an array for later
     shift # past argument
