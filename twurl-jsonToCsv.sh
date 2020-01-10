@@ -21,7 +21,7 @@ function createCSV() {
       rm ./data/${search_string}-mentions.csv
     fi
     #echoLog 'INFO' "cleaned previous CSV"
-    echo 'status_id,user_id,text,is_quote_status,quoted_status_id,in_reply_to_status_id,in_reply_to_user_id,retweet_count,favorite_count,favorited,retweeted,created_at,filename' > ./data/${search_string}-statuses.csv
+    echo 'status_id,user_id,text,is_quote_status,quoted_status_id,in_reply_to_status_id,in_reply_to_user_id,retweet_count,favorite_count,favorited,retweeted,retweeted_status_id,created_at,filename' > ./data/${search_string}-statuses.csv
     echo 'user_id,screen_name,location,description,followers_count,friends_count,listed_count,favourites_count,verified,statuses_count,created_at,filename' > ./data/${search_string}-users.csv
     
     if [ ${user_mentions} == 'yes' ]; then
@@ -32,7 +32,7 @@ function createCSV() {
   echoLog 'INFO' "search_string: ${search_string}, \e[93mi: ${i}\e[0m, user_mentions: ${user_mentions}"
 
   ## Status
-  cat ./data/${search_string}-${i}.json | jq -r --arg filename "${search_string}-${i}.json" '.statuses[]+{filename:$filename} | ([.id_str, .user.id_str, .full_text, .is_quote_status, .quoted_status_id, .in_reply_to_status_id, .in_reply_to_user_id, .retweet_count, .favorite_count, .favorited, .retweeted, .created_at, .filename] | @csv)'  >> ./data/${search_string}-statuses.csv
+  cat ./data/${search_string}-${i}.json | jq -r --arg filename "${search_string}-${i}.json" '.statuses[]+{filename:$filename} | ([.id_str, .user.id_str, .full_text, .is_quote_status, .quoted_status_id, .in_reply_to_status_id, .in_reply_to_user_id, .retweet_count, .favorite_count, .favorited, .retweeted, .retweeted_status.id, .created_at, .filename] | @csv)'  >> ./data/${search_string}-statuses.csv
   ## User
   cat ./data/${search_string}-${i}.json | jq -r --arg filename "${search_string}-${i}.json" '.statuses[]+{filename:$filename} | ([.user.id_str, .user.screen_name, .user.location, .user.description, .user.followers_count, .user.friends_count, .user.listed_count, .user.favourites_count, .user.verified, .user.statuses_count, .user.created_at, .filename] | @csv)' >> ./data/${search_string}-users.csv
   
