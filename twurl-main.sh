@@ -22,25 +22,16 @@ since_id=-1
 next_id=-1
 i=1
 
-## Process Search Type
-if [ ${search_type} == 'hash' ]; then
-    ascii='%23'
-elif [ ${search_type} == 'at' ]; then
-    ascii='%40'
-else
-    ascii=''
-fi
-
-echoLog "INFO" "\e[34mSTART\e[0m, search: ${search_string}, search_type: ${search_type}, ascii: ${ascii}, max_id: ${max_id}, since_id: ${since_id}, user_mentions: ${user_mentions}, run_type: ${run_type}"
+echoLog "INFO" "\e[34mSTART\e[0m, search: ${search_string}, search_type: ${search_type}, max_id: ${max_id}, since_id: ${since_id}, user_mentions: ${user_mentions}, run_type: ${run_type}"
 
 ## _main_ function to direct process logic (i.e. get JSON, convert JSON to CSV or both sequentially)
 function _main_() {
   if [ ${run_type} == 'json' ]; then
-    apiCall ${search_string} ${search_type} ${ascii} ${num_files}
+    apiCall ${search_string} ${search_type} ${num_files}
   elif [ ${run_type} == 'csv' ]; then
     jsonToCsv ${search_string} ${user_mentions}
   elif [ ${run_type} == 'both' ]; then
-    apiCall ${search_string} ${search_type} ${ascii} ${num_files}
+    apiCall ${search_string} ${search_type} ${num_files}
     jsonToCsv ${search_string} ${user_mentions}
   fi
 }

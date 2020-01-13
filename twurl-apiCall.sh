@@ -14,8 +14,16 @@ function apiCall() {
 
   search_string=${1}
   search_type=${2}
-  ascii=${3}
-  num_files=${4}
+  num_files=${3}
+  
+  ## Process Search Type
+  if [ ${search_type} == 'hash' ]; then
+      ascii='%23'
+  elif [ ${search_type} == 'at' ]; then
+      ascii='%40'
+  else
+      ascii=''
+  fi
 
   echoLog "INFO" "\e[34mSTART\e[0m, search: ${search_string}, type: ${search_type}, ascii: ${ascii}, max_id: ${max_id}, since_id: ${since_id}"
 
