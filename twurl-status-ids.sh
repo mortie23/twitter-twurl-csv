@@ -40,7 +40,11 @@ for idx in "${!idsArray[@]}"; do
   if [ ${iMod100} == 0 ] || [ $((${i})) == ${len} ]; then
     echoLog "INFO" "Getting statuses from list value ${from} to ${i}"
     ## Call API and write to JSON file
-    twurl "/1.1/statuses/lookup.json?id=${idString}" > ./data/statuses-${i}.json
+    twurl "/1.1/statuses/lookup.json?id=${idString}&tweet_mode=extended" > ./data/statuses-${i}.json
+    ## Turn result array into an object with a single array inside
+    echo '{"statuses":' | cat - ./data/statuses-${i}.json > temp && mv temp ./data/statuses-${i}.json
+    echo '}' >> ./data/statuses-${i}.json
+    ## Reset the string and set the start id of the next batch of 100 
     idString=${idsArray[${i}]}
     from=$((${i}+1))
   else
