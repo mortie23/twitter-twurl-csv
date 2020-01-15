@@ -23,6 +23,10 @@ function parseArgs() {
   key="$1"
 
   case $key in
+    -h|--help)
+		help="Y"
+		shift # past argument
+		;;
     -s|--search_string)
     search_string="$2"
     shift # past argument

@@ -12,6 +12,15 @@
 
 . common-functions.sh
 parseArgs "$@"
+
+## Show help
+if [ ${help} == 'Y' ]; then
+  echo "HELP"
+  echo "  Usage:    ./twurl-main.sh -s <search_string> -n <num_files|high> -st <hash|at|nil> -um <yes|no> -rt <json|csv|both>"
+  echo "  example:  ./twurl-main.sh -s mortie23 -n 1000 -st at -um yes -rt both"
+  exit
+fi
+
 ## see parseArgs function from common-functions.sh to see what variables are returned 
 . twurl-apiCall.sh
 . twurl-jsonToCsv.sh

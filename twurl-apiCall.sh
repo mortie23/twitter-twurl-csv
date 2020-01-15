@@ -67,6 +67,10 @@ function apiCall() {
       break
     fi
 
+    ## Twitter API only allows 180 calls in 15 mintues. 
+    ## To ensure that the scripts runs until the timespan is reached 5 second pause is required
+    sleep 5
+
   done
   echoLog "INFO" "\e[31mEND\e[0m, search: ${search_string}, type: ${search_type}, ascii: ${ascii}"
 }
