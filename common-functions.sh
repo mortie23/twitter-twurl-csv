@@ -52,6 +52,11 @@ function parseArgs() {
     shift # past argument
     shift # past value
     ;;
+    -f|--filename)
+    filename="$2"
+    shift # past argument
+    shift # past value
+    ;;
     *)    # unknown option
     POSITIONAL+=("$1") # save it in an array for later
     shift # past argument
@@ -60,7 +65,7 @@ function parseArgs() {
   done
   set -- "${POSITIONAL[@]}" # restore positional parameters
 
-  echo search_string = "${search_string}"
-  echo num_files = "${num_files}"
-  echo search_type = "${search_type}"
+  #echo search_string = "${search_string}"
+  #echo num_files = "${num_files}"
+  #echo search_type = "${search_type}"
 }
