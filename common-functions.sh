@@ -15,6 +15,9 @@ function echoLog() {
   echo -e "${logLevel}, ${strdtm}, func(${FUNCNAME[1]}), ${message}" |& tee -a ${logfile}
 }
 
+## Initialise flags
+help='N'
+slow='N'
 ## to parse arguments
 function parseArgs() {
   POSITIONAL=()
@@ -25,6 +28,10 @@ function parseArgs() {
   case $key in
     -h|--help)
 		help="Y"
+		shift # past argument
+		;;
+    -sl|--slow)
+		slow="Y"
 		shift # past argument
 		;;
     -s|--search_string)

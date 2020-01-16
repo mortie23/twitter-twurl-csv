@@ -15,6 +15,7 @@ function apiCall() {
   search_string=${1}
   search_type=${2}
   num_files=${3}
+  slow=${4}
   
   ## Process Search Type
   if [ ${search_type} == 'hash' ]; then
@@ -69,7 +70,9 @@ function apiCall() {
 
     ## Twitter API only allows 180 calls in 15 mintues. 
     ## To ensure that the scripts runs until the timespan is reached 5 second pause is required
-    sleep 5
+    if [ ${slow} == 'Y' ]; then
+      sleep 5
+    fi
 
   done
   echoLog "INFO" "\e[31mEND\e[0m, search: ${search_string}, type: ${search_type}, ascii: ${ascii}"
