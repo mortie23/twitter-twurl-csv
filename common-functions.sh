@@ -17,7 +17,7 @@ function echoLog() {
 
 ## Initialise flags
 help='N'
-slow='N'
+speed='Y'
 ## to parse arguments
 function parseArgs() {
   POSITIONAL=()
@@ -30,8 +30,8 @@ function parseArgs() {
 		help="Y"
 		shift # past argument
 		;;
-    -sl|--slow)
-		slow="Y"
+    -sp|--speed)
+		speed="N"
 		shift # past argument
 		;;
     -s|--search_string)
@@ -71,8 +71,4 @@ function parseArgs() {
   esac
   done
   set -- "${POSITIONAL[@]}" # restore positional parameters
-
-  #echo search_string = "${search_string}"
-  #echo num_files = "${num_files}"
-  #echo search_type = "${search_type}"
 }
